@@ -30,6 +30,7 @@
         <module>auto-implement</module>
         <module>auto-implement-test</module>
         <module>bean-info-collector</module>
+        <module>bean-validation</module>
 	</modules>
 
   <build>

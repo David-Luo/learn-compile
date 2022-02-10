@@ -14,7 +14,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.util.Elements;
 import javax.lang.model.SourceVersion;
 
 import com.bean.annotation.BeanInfoCollector;
@@ -27,9 +26,6 @@ import com.bean.model.reader.ImplementInterfaceReader;
         {"com.bean.annotation.BeanInfoCollector"})
 @SupportedSourceVersion(SourceVersion.RELEASE_14)
 public class BeanInfoCollectorProcesser extends AbstractProcessor {
-
-
-    private Elements elementUtils;
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
@@ -60,7 +56,7 @@ public class BeanInfoCollectorProcesser extends AbstractProcessor {
         
         ClassSymbol defineImpl = builder.build();
         //添加所有需要实现的方法
-        ImplementInterfaceReader reader = new ImplementInterfaceReader(defineImpl, elementUtils);
+        ImplementInterfaceReader reader = new ImplementInterfaceReader(defineImpl, processingEnv.getElementUtils());
         reader.visitType(element, null);
         List<Element> enclosedElements = defineImpl.getEnclosedElements().stream().filter(e -> !e.getModifiers().contains(Modifier.DEFAULT)).collect(Collectors.toList());
         builder.enclosedElements(enclosedElements);

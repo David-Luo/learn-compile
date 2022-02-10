@@ -9,22 +9,22 @@ import com.bean.annotation.AutoPojoValue;
 import java.lang.annotation.Annotation;
 
 @AutoPojoValue
-public interface ParameterSymbol extends VariableElement, SymbolElement {
+public interface ParameterSymbol extends VariableElement{
     default TypeMirror asType() {
         return getType();
     }
 
     public TypeMirror getType();
     default <A extends Annotation> A getAnnotation(Class<A> arg0) {
-        return SymbolElement.super.getAnnotation(arg0);
+        return null;
     }
 
     default <A extends Annotation> A[] getAnnotationsByType(Class<A> arg0) {
-        return SymbolElement.super.getAnnotationsByType(arg0);
+        return null;
     }
 
-    default <R, P> R accept(ElementVisitor<R, P> arg0, P arg1) {
-        return SymbolElement.super.accept(arg0, arg1);
+    default <R, P> R accept(ElementVisitor<R, P> visitor, P arg) {
+        return visitor.visitVariable(this, arg);
     }
 
 }

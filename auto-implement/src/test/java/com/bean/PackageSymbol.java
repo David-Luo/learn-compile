@@ -1,16 +1,20 @@
-package com.bean.model.element;
-
+package com.bean;
 
 import javax.lang.model.element.ElementVisitor;
-import javax.lang.model.element.TypeParameterElement;
+import javax.lang.model.element.Name;
+import javax.lang.model.element.PackageElement;
 import javax.lang.model.type.TypeMirror;
 
 import com.bean.annotation.AutoPojoValue;
+import com.bean.annotation.Mandatory;
 
 import java.lang.annotation.Annotation;
 
 @AutoPojoValue
-public interface TypeParameterSymbol extends TypeParameterElement{
+public interface PackageSymbol extends PackageElement{
+    @Override
+    // @Mandatory
+    public Name getQualifiedName();
     default TypeMirror asType() {
         return null;
     }
@@ -23,8 +27,10 @@ public interface TypeParameterSymbol extends TypeParameterElement{
         return null;
     }
 
-    default <R, P> R accept(ElementVisitor<R, P> visitor, P arg) {
-        return visitor.visitTypeParameter(this, arg);
+    default <R, P> R accept(ElementVisitor<R, P> arg0, P arg1) {
+        return null;
     }
-
+    default boolean isUnnamed() {
+        return false;
+    }
 }

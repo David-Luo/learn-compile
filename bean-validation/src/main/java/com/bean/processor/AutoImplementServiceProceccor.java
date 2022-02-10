@@ -13,7 +13,7 @@ import javax.lang.model.element.TypeElement;
 @SupportedAnnotationTypes(
         {"com.bean.annotation.AutoPojoValue"})
 @SupportedSourceVersion(SourceVersion.RELEASE_14)
-public class AutoPojoValueProcessor extends AbstractProcessor {
+public class AutoImplementServiceProceccor  extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
@@ -27,7 +27,7 @@ public class AutoPojoValueProcessor extends AbstractProcessor {
     }
     
     public boolean handle(Element annotation, Element element) {
-        ImplementPojo p = new ImplementPojo();
+        ImplementConstraintValidator p = new ImplementConstraintValidator();
         p.init(processingEnv);
         p.processing((TypeElement)element);
         

@@ -15,18 +15,18 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AutoPojoValue
-public interface ClassSymbol extends TypeElement, SymbolElement {
+public interface ClassSymbol extends TypeElement{
     
     default TypeMirror asType() {
-        return SymbolElement.super.asType();
+        return null;
     }
 
     default <A extends Annotation> A getAnnotation(Class<A> arg0) {
-        return SymbolElement.super.getAnnotation(arg0);
+        return null;
     }
 
     default <A extends Annotation> A[] getAnnotationsByType(Class<A> arg0) {
-        return SymbolElement.super.getAnnotationsByType(arg0);
+        return null;
     }
 
     default <R, P> R accept(ElementVisitor<R, P> visitor, P arg) {

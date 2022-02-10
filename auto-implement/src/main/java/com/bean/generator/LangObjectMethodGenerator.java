@@ -1,5 +1,7 @@
 package com.bean.generator;
 
+import static javax.lang.model.util.ElementFilter.methodsIn;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,14 +14,13 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.util.Elements;
 
-import static javax.lang.model.util.ElementFilter.methodsIn;
-
 import com.bean.annotation.Mandatory;
-import com.squareup.javapoet.AnnotationSpec;
+import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
@@ -101,7 +102,11 @@ public class LangObjectMethodGenerator {
         
         for (FieldSpec fieldSymbol : fieldSpecs) {
             builder.add("if($L != null){\n",fieldSymbol.name);
-            builder.addStatement("sb.append(String.format(\",\\\"$L\\\":\\\"%s\\\"\", $L))",fieldSymbol.name,fieldSymbol.name);
+            if(isArray(fieldSymbol.type)){
+                array(builder, fieldSymbol);
+            }else{
+                sigle(builder, fieldSymbol);
+            }
             builder.add("}\n");
         }
         builder.addStatement("sb.append('}')");
@@ -109,4 +114,35 @@ public class LangObjectMethodGenerator {
         return builder.build();
     }
  
+    private void sigle(CodeBlock.Builder builder,FieldSpec fieldSymbol){
+        builder.addStatement("sb.append(String.format(\",\\\"$L\\\":\\\"%s\\\"\", $L))",fieldSymbol.name,fieldSymbol.name);
+    }
+    private void array(CodeBlock.Builder builder,FieldSpec fieldSymbol){
+
+    }
+    private boolean isArray(TypeName type){
+        if (type instanceof ArrayTypeName) {
+            return true;
+        }
+        if (type instanceof ParameterizedTypeName) {
+            type = ((ParameterizedTypeName)type).rawType;
+            if(isIterable(type.toString())){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean isIterable(String type){
+        try {
+            Class<?> clazz = Class.forName(type);
+            if(Iterable.class.isAssignableFrom(clazz)){
+                return true;
+            }
+           } catch (ClassNotFoundException e) {
+             e.printStackTrace();
+           }
+        return false;
+    }
 }

@@ -1,9 +1,9 @@
-package com.bean.model;
+package com.bean;
 
 
 import javax.tools.ToolProvider;
 
-import com.bean.processing.BeanInfoCollectorProcesser;
+import com.bean.processor.AutoPojoValueProcessor;
 
 import org.junit.Test;
 
@@ -11,12 +11,6 @@ public class CompileTest {
     @Test
     public void testCompile(){
         compile(PackageSymbol.class);
-        // compile(MethodSymbol.class);
-        // compile(ClassSymbol.class);
-        // compile(ParameterSymbol.class);
-        // compile(FieldSymbol.class);
-        // compile(TypeParameterSymbol.class);
-        // compile(TestTypeSymbol.class);
     }
 
 
@@ -26,7 +20,7 @@ public class CompileTest {
         // 获取java编译器
         javax.tools.JavaCompiler javaCompiler = ToolProvider.getSystemJavaCompiler();
         String[] ops = {
-                "-processor", BeanInfoCollectorProcesser.class.getName(),
+                "-processor", AutoPojoValueProcessor.class.getName(),
                 "-d", "target/compile",
                 "src/test/java/"+className+".java"};
         int i = javaCompiler.run(null, null, null, ops);
