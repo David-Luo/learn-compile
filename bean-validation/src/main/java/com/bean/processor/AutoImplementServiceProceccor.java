@@ -11,7 +11,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 
 @SupportedAnnotationTypes(
-        {"com.bean.annotation.AutoPojoValue"})
+        {"com.bean.annotation.AutoImplementService"})
 @SupportedSourceVersion(SourceVersion.RELEASE_14)
 public class AutoImplementServiceProceccor  extends AbstractProcessor {
 

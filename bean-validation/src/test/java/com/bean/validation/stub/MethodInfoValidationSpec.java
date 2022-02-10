@@ -12,9 +12,6 @@ import com.bean.validation.IValidationSpecProcess;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public interface MethodInfoValidationSpec extends IValidationSpecProcess<MethodSymbolImpl> {
-    
-    boolean isValid(MethodSymbolImpl value, ConstraintValidatorContext context);
-
     @NotEmpty
     @SubsetOf({Modifier.STATIC,Modifier.PUBLIC})
     public boolean modifiers(Set<Modifier> value, ConstraintValidatorContext context);

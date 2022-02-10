@@ -11,6 +11,7 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 
+import com.bean.generator.ConstraintValidatorGenerator;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
@@ -18,10 +19,12 @@ import com.squareup.javapoet.TypeSpec;
 public class ImplementConstraintValidator {
     private Elements elementUtils;
     private Filer filer;
+    private ConstraintValidatorGenerator generator;
 
     public synchronized void init(ProcessingEnvironment processingEnv) {
         this.elementUtils = processingEnv.getElementUtils();
         this.filer = processingEnv.getFiler();
+        this.generator = new ConstraintValidatorGenerator();
     }
 
     public void processing(TypeElement classElement) {
@@ -43,9 +46,7 @@ public class ImplementConstraintValidator {
                 .addSuperinterface(classElement.asType());
 
         List<ExecutableElement> methods = methodsIn(elementUtils.getAllMembers(classElement));
-        // pojoDataMethodBuilder.createDataMethod(methods, classBuilder);
-
-        // pattern.createBuilder(implementClassName,classBuilder); 
+        generator.createDataMethod(methods, classBuilder);
 
         // System.out.println(classBuilder.build().toString());
         return classBuilder.build();
