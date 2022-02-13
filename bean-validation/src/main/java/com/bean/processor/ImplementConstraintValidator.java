@@ -24,7 +24,7 @@ public class ImplementConstraintValidator {
     public synchronized void init(ProcessingEnvironment processingEnv) {
         this.elementUtils = processingEnv.getElementUtils();
         this.filer = processingEnv.getFiler();
-        this.generator = new ConstraintValidatorGenerator();
+        this.generator = new ConstraintValidatorGenerator(processingEnv.getTypeUtils(),processingEnv.getElementUtils());
     }
 
     public void processing(TypeElement classElement) {
@@ -46,7 +46,7 @@ public class ImplementConstraintValidator {
                 .addSuperinterface(classElement.asType());
 
         List<ExecutableElement> methods = methodsIn(elementUtils.getAllMembers(classElement));
-        generator.createDataMethod(methods, classBuilder);
+        generator.createCode(implementClassName, methods, classBuilder,classElement);
 
         // System.out.println(classBuilder.build().toString());
         return classBuilder.build();

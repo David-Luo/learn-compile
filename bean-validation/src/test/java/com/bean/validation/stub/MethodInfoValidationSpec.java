@@ -6,11 +6,12 @@ import java.util.Set;
 import javax.lang.model.element.Modifier;
 import javax.validation.ConstraintValidatorContext;
 
+import com.bean.annotation.AutoImplementService;
 import com.bean.model.element.MethodSymbolImpl;
 import com.bean.validation.IValidationSpecProcess;
 
 import org.hibernate.validator.constraints.NotEmpty;
-
+@AutoImplementService
 public interface MethodInfoValidationSpec extends IValidationSpecProcess<MethodSymbolImpl> {
     @NotEmpty
     @SubsetOf({Modifier.STATIC,Modifier.PUBLIC})

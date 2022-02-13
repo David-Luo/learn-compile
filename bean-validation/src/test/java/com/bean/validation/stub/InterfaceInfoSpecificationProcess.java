@@ -7,14 +7,22 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import com.bean.model.element.ClassSymbolImpl;
+import com.bean.validation.AnnotationUtils;
 import com.bean.validation.ValidationSpec;
 
-public class InterfaceInfoSpecificationProcess implements InterfaceInfoSpecification{
+public class InterfaceInfoSpecificationProcess implements InterfaceInfoSpecification {
+
+    @SubsetOf({ Modifier.PRIVATE })
+    private Object _modifiersSubset;
+
+    private static ConstraintValidator modifiersSubset = AnnotationUtils.initConstraintValidator(
+            "com.bean.validation.stub.ModifierValidation", "com.bean.validation.stub.InterfaceInfoSpecificationProcess",
+            "_modifiersSubset");
 
     @Override
     public void initialize(ValidationSpec constraintAnnotation) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -25,18 +33,11 @@ public class InterfaceInfoSpecificationProcess implements InterfaceInfoSpecifica
 
     @Override
     public boolean modifiers(Set<Modifier> value, ConstraintValidatorContext context) {
-        Class<InterfaceInfoSpecification> clazz = InterfaceInfoSpecification.class;
-        SubsetOf constraintAnnotation=null;
-        try {
-            ConstraintValidator validator = ModifierValidation.class.newInstance();
-            validator.initialize(constraintAnnotation);
-            return validator.isValid(value, context);
-        } catch (InstantiationException | IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        };
-        
-        return true;
+        boolean result = true;
+        boolean temp = true;
+        temp = modifiersSubset.isValid(value, context);
+        result = result && temp;
+        return result;
     }
-    
+
 }
