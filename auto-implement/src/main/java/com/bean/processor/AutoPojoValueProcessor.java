@@ -17,6 +17,9 @@ public class AutoPojoValueProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+        if(roundEnv.processingOver()){
+            return false;
+        }
         for (TypeElement annotation : annotations) {
             Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(annotation);
             for (Element element : elements) {
