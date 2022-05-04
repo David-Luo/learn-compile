@@ -3,36 +3,73 @@ import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Annotation;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import javax.validation.Constraint;
-import javax.validation.ConstraintValidatorContext;
-import javax.validation.Payload;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 
-@Target({ FIELD, METHOD, PARAMETER, ANNOTATION_TYPE })
+import com.bean.validation.ValidationSpec.List;
+
+@Target({ TYPE, FIELD, METHOD, PARAMETER, ANNOTATION_TYPE })
 @Retention(RUNTIME)
-@Constraint(validatedBy = ValidationSpecProcess.class)
+@Constraint(validatedBy = { })
+@Repeatable(List.class)
 public @interface ValidationSpec {
-    Class<? extends IValidationSpecProcess>[] value() default VoidSpec.class;
-    Class<? extends IValidationSpecProcess>[] element() default VoidSpec.class;
-
+    Class<? extends SpecificationValidator<?>>[] value();
+    Conditional condition() default @Conditional;
     Class<? extends Payload>[] payload() default {};
     Class<?>[] groups() default {};
     String message() default "{forbidden.word}";
-    static public class VoidSpec implements IValidationSpecProcess{
+    @Documented
+	@Target({ TYPE, FIELD, METHOD, PARAMETER, ANNOTATION_TYPE })
+	@Retention(RUNTIME)
+	public @interface List {
+		ValidationSpec[] value();
+	}  
 
-        @Override
-        public void initialize(Annotation constraintAnnotation) {
+    public class ValidationSpecDefinex  implements Annotation{
+        private final Class<? extends SpecificationValidator<?>>[] value;
+        private final Conditional condition;
+        private final Class<? extends Payload>[] payload;
+        private final Class<?>[] groups;
+        private final String message;
+
+        public ValidationSpecDefinex(Class<? extends SpecificationValidator<?>>[] value, Conditional condition,
+                Class<? extends Payload>[] payload, Class<?>[] groups, String message) {
+            this.value = value;
+            this.condition = condition;
+            this.payload = payload;
+            this.groups = groups;
+            this.message = message;
         }
 
         @Override
-        public boolean isValid(Object value, ConstraintValidatorContext context) {
-            return false;
+        public Class<? extends Annotation> annotationType() {
+            return ValidationSpec.class;
         }
+    public Class<? extends SpecificationValidator<?>>[] value(){
+        return value;
+    }
+    public Conditional condition(){
+        return condition;
+    }
+    public Class<? extends Payload>[] payload(){
+        return payload;
+    }
+    public Class<?>[] groups(){
+        return groups;
+    }
+    public String message(){
+        return message;
+    }
 
-    } 
+    }
+
 }

@@ -1,0 +1,81 @@
+@@startuml class
+
+interface Validator{
+ <T> Set<BeanConstraintViolation<T>> validateSpecification(Class<? extends ConstraintSpecification<T>> specification, T value) 
+}
+
+class BeanConstraintViolation{
+    - String message
+    - Object invalidValue
+    - BeanPath path
+    - ConstraintDefine constraintDefine
+}
+
+interface ConstraintSpecification<T> {
+
+}
+Validator ..> ConstraintSpecification
+class ValidationContext<R>{
+    - R rootBean
+    - Set<BeanConstraintViolation<R>> failingConstraints
+    - Set<MetaConstraint> processed
+    - Set<Class<?>> requiredGroups
+
+}
+abstract ConstraintSpecificationValidator<T> implements SpecificationValidator, ConstraintSpecification{
+
+}
+
+interface SpecificationValidator<T> {
+    boolean validateSpecification(ValidationContext<?> validationContext, ValueContext<T> beanContext);
+}
+interface ValidCondition<T> {
+    boolean test(T value)
+    boolean test(ValueContext<T> value)
+}
+ConstraintSpecificationValidator ..> ValidCondition
+ConstraintSpecificationValidator ..> MetaConstraint
+interface BeanConstraintValidator<T>{
+    boolean isValid(ValueContext<V> value)
+}
+
+class SpecificationValidatorHelper{
+    + boolean isValidationRequired(ValidCondition<T> condition,  ValueContext<V> value)
+    + <T> ValueContext<T> buildValueContext(ValidationContext<?> validationContext, ValueContext<?> container, Point path, T value)
+    + <T> MetaConstraint<T> buildMetaConstraint(ValidationContext<?> validationContext, ValueContext<T> value, BeanConstraintDescriptor<T> descriptor,BeanConstraintValidator<T> validator)
+}
+
+class MetaConstraint<V>{
+    - ValidationContext<R> validationContext
+    - ConstraintDefine<V> constraintDefine
+    - ValueContext<V> value
+    - BeanConstraintValidator<V> validator
+
+    + process()
+    - validateSingleConstraint()
+    - ConstraintViolation createViolation()
+}
+
+MetaConstraint ..> ValidationContext
+MetaConstraint ..> ValueContext
+MetaConstraint ..> BeanConstraintValidator
+
+class ValueContext<V>{
+    - Object rootBean
+	- Object container
+	- Point path
+	- V currentValue
+}
+
+class Point{
+    String toString()
+}
+
+interface ConstraintDefine{
+
+}
+
+Validator ..> BeanConstraintViolation 
+BeanConstraintViolation ..> BeanPath
+BeanConstraintViolation ..> ConstraintDefine
+@@enduml

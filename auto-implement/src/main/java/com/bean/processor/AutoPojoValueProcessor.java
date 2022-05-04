@@ -3,6 +3,7 @@ package com.bean.processor;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
@@ -10,9 +11,12 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 
+import com.google.auto.service.AutoService;
+
 @SupportedAnnotationTypes(
         {"com.bean.annotation.AutoPojoValue"})
 @SupportedSourceVersion(SourceVersion.RELEASE_14)
+@AutoService(Processor.class)
 public class AutoPojoValueProcessor extends AbstractProcessor {
 
     @Override
