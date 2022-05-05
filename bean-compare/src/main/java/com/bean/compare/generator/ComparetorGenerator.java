@@ -1,10 +1,13 @@
-package com.bean;
+package com.bean.compare.generator;
 
 import javax.lang.model.element.TypeElement;
 
+import com.bean.compare.runtime.ChangeChecker;
 import com.bean.generator.ServiceGenerator;
+import com.google.auto.service.AutoService;
 
-public class ComparetorGenerator implements ServiceGenerator<Comparetor>{
+@AutoService(ServiceGenerator.class)
+public class ComparetorGenerator implements ServiceGenerator<ChangeChecker>{
 
     @Override
     public void processing(TypeElement classElement) {

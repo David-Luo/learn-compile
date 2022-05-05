@@ -1,16 +1,17 @@
 package com.bean;
 
-
 import javax.tools.ToolProvider;
 
-import com.google.auto.service.processor.AutoServiceProcessor;
+import com.bean.compare.stub.diff.TeacherChangeChecker;
+import com.bean.processor.AutoImplementServiceProcessor;
 
 import org.junit.Test;
 
-public class CompileTest {
+public class AutoImplementServiceProcessorTest {
+    
     @Test
     public void testCompile(){
-        compile(NotNullValidator.class);
+        compile(TeacherChangeChecker.class);
     }
 
 
@@ -20,7 +21,7 @@ public class CompileTest {
         // 获取java编译器
         javax.tools.JavaCompiler javaCompiler = ToolProvider.getSystemJavaCompiler();
         String[] ops = {
-                "-processor", AutoServiceProcessor.class.getName(),
+                "-processor", AutoImplementServiceProcessor.class.getName(),
                 "-d", "target/compile",
                 "src/test/java/"+className+".java"};
         int i = javaCompiler.run(null, null, null, ops);
