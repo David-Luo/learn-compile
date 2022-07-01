@@ -7,14 +7,12 @@ import com.bean.processor.AutoImplementServiceProcessor;
 
 import org.junit.Test;
 
-public class AutoImplementServiceProcessorTest {
+public class ComparetorGeneratorTest {
     
     @Test
     public void testCompile(){
         compile(TeacherChangeChecker.class);
     }
-
-
 
     private void compile(Class<?> clazz){
         String className = clazz.getName().replaceAll("\\.","/");

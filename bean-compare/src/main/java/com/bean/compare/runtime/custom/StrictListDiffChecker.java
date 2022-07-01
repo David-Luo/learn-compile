@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StrictListDiffChecker<T> extends ListToMapDiffChecker<T> implements ListDiffChecker<T> {
+public class StrictListDiffChecker<T extends List> extends ListToMapDiffChecker<T> implements ListDiffChecker<T> {
 
     @Override
     protected Map toMap(List<T> list) {
