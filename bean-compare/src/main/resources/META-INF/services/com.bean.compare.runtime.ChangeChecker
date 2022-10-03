@@ -1,0 +1,4 @@
+com.bean.compare.runtime.custom.MapDiffChecker
+com.bean.compare.runtime.custom.StrictListDiffChecker
+com.bean.compare.runtime.custom.ComparableDiffChecker
+com.bean.compare.runtime.custom.AtomicDiffChecker

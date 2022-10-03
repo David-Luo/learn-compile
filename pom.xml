@@ -27,8 +27,10 @@
     </dependencies>
 
     <modules>
+        <module>auto-service</module>
         <module>auto-implement</module>
         <module>auto-implement-test</module>
+        <module>bean-compare</module>
         <module>bean-info-collector</module>
         <module>bean-validation</module>
 	</modules>
