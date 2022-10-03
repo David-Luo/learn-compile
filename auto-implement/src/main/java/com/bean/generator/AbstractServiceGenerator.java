@@ -32,7 +32,7 @@ public abstract class AbstractServiceGenerator<T> implements ServiceGenerator<T>
         String packageName=elementUtils.getPackageOf(classElement).getQualifiedName().toString();
         String simpleName=classElement.getSimpleName().toString()+"Impl";
         ClassName implementClassName = ClassName.get(packageName, simpleName);
-        TypeSpec.Builder classBuilder = createClasBuilder(implementClassName,classElement);
+        TypeSpec.Builder classBuilder = createClassBuilder(implementClassName,classElement);
         buildClass(classBuilder, implementClassName, classElement);
         
         try {
@@ -42,7 +42,7 @@ public abstract class AbstractServiceGenerator<T> implements ServiceGenerator<T>
         }
     }
 
-    protected TypeSpec.Builder createClasBuilder(ClassName implementClassName, TypeElement classElement){
+    protected TypeSpec.Builder createClassBuilder(ClassName implementClassName, TypeElement classElement){
        return TypeSpec
                 .classBuilder(implementClassName)
                 .addModifiers(Modifier.PUBLIC)

@@ -12,11 +12,11 @@ import java.util.ServiceLoader;
 import java.util.stream.Collectors;
 
 @AutoService(ServiceDefinitionRegistry.class)
-public class ChangeChekerRegistry implements ServiceDefinitionRegistry<ChangeChecker>{
+public class ChangeCheckerRegistry implements ServiceDefinitionRegistry<ChangeChecker>{
     
     private List<ChangeCheckerDefinition> definations;
 
-    public ChangeChekerRegistry() {
+    public ChangeCheckerRegistry() {
         this.definations = init();
     }
 

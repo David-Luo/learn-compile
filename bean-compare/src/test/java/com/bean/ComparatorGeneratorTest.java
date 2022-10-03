@@ -7,7 +7,7 @@ import com.bean.processor.AutoImplementServiceProcessor;
 
 import org.junit.Test;
 
-public class ComparetorGeneratorTest {
+public class ComparatorGeneratorTest {
     
     @Test
     public void testCompile(){

@@ -5,11 +5,11 @@ import java.lang.reflect.Type;
 import java.util.Objects;
 import java.util.Optional;
 
-import com.bean.compare.meta.ChangeChekerRegistry;
+import com.bean.compare.meta.ChangeCheckerRegistry;
 
 public class ChangeCheckerHelper {
     private static ChangeCheckerFactory changeCheckerFactory = new ChangeCheckerFactory();
-    private static ChangeChekerRegistry changeChekerRegistry = new ChangeChekerRegistry();
+    private static ChangeCheckerRegistry changeCheckerRegistry = new ChangeCheckerRegistry();
     /**
      * 比较对象前后变化
      * @param left
@@ -29,7 +29,7 @@ public class ChangeCheckerHelper {
             throw new RuntimeException(String.format("can`t compare between %s and %s", left.getClass().toString(), right.getClass().toString()));
         }
         ;
-        Class<? extends ChangeChecker> clazz =changeChekerRegistry.lookup(left.getClass());
+        Class<? extends ChangeChecker> clazz = changeCheckerRegistry.lookup(left.getClass());
         return changeCheckerFactory.getInstance(clazz);
     }
 

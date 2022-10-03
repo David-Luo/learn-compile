@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import com.bean.compare.meta.ChangeChekerRegistry;
+import com.bean.compare.meta.ChangeCheckerRegistry;
 
 import com.bean.compare.runtime.ChangeChecker;
 import com.bean.compare.runtime.PojoDifferance;
@@ -28,8 +28,8 @@ import com.squareup.javapoet.TypeSpec;
 import javax.lang.model.element.Modifier;
 
 @AutoService(ServiceGenerator.class)
-public class ComparetorGenerator extends AbstractServiceGenerator<ChangeChecker> implements ServiceGenerator<ChangeChecker>{
-    private ChangeChekerRegistry changeChekerRegistry = new ChangeChekerRegistry();
+public class ComparatorGenerator extends AbstractServiceGenerator<ChangeChecker> implements ServiceGenerator<ChangeChecker>{
+    private ChangeCheckerRegistry changeCheckerRegistry = new ChangeCheckerRegistry();
     protected void buildClass(TypeSpec.Builder classBuilder, ClassName implementClassName, TypeElement classElement){
         List<ExecutableElement> methods = methodsIn(elementUtils.getAllMembers(classElement));
         TypeElement changeCheckerInterface = elementUtils.getTypeElement(ChangeChecker.class.getCanonicalName());
@@ -66,7 +66,7 @@ public class ComparetorGenerator extends AbstractServiceGenerator<ChangeChecker>
             
             String filedName = variableElement.getSimpleName().toString();
             String className = ((DeclaredType)variableElement.asType()).asElement().toString();
-            Class cheker = changeChekerRegistry.lookup(className);
+            Class cheker = changeCheckerRegistry.lookup(className);
             String checkerName = filedName+"Checker";
             body.addStatement("$T $L = new $T()", cheker,checkerName, cheker);
             body.addStatement("attributeDiff = $L.check(arg0.getSalary(), arg1.getSalary())",checkerName);

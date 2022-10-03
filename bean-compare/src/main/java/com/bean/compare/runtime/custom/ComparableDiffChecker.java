@@ -11,9 +11,9 @@ public class ComparableDiffChecker<T extends Comparable>  implements ChangeCheck
         if(before == null && after ==null){
             return Optional.empty();
         }else if(before !=null && after == null){
-            return Optional.of(new Differance(before,after,Differance.ChangeType.delete));
+            return Optional.of(new Differance(before, null,Differance.ChangeType.delete));
         }else if (before == null && after != null){
-            return Optional.of(new Differance(before,after,Differance.ChangeType.add));
+            return Optional.of(new Differance(null,after,Differance.ChangeType.add));
         }else if(before.compareTo(after)==0){
             return Optional.empty();
         }
