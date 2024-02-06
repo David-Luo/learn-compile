@@ -11,7 +11,7 @@ JavaBean基本能力：
 - 持久化
 
 
-···java
+```java
 interface BeanUtil {
     /**
     * 深层拷贝当前对象.
@@ -39,7 +39,7 @@ interface BeanUtil {
     */
     public  static  <T> Option<DiffResult> diff(Object object1, Object object1);
 }
-···
+```
 
 
 
@@ -65,6 +65,7 @@ toString/equals/hashCode
 - 实体信息：业务代码集、业务数据集、数据模型、业务模型、业务规则集、产品数据集、组织架构
 - 过程信息：系统能力集、业务流程集、
 
+OMG:
 - 概念模型
 - 逻辑模型
 - 物理模型
@@ -74,7 +75,7 @@ ArchiMate：
 - 应用层(Application)：支持业务服务的应用
 - 技术层(Technology）：通过硬件和软件的交互来运行应用程序
 
-
+类型：
 - Active structure：subject
 - Behaviour: verb
 - Passive structure：object
