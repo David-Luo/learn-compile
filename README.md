@@ -11,7 +11,6 @@ JavaBean基本能力：
 - 持久化
 
 
-
 ···java
 interface BeanUtil {
     /**
