@@ -1,14 +1,18 @@
 # learn-compile
 学习编译原理,代码自动生成
 
-JavaBean基本能力： 
+BeanUtil基本能力： 
 
-- 复制
-- 合并
-- 比较
-- 转换
-- 校验
-- 持久化
+- 复制: bean-base
+- 合并: bean-merge
+- 比较: bean-compare
+- 转换: bean-map
+- 校验: bean-validate
+- 持久化: bean-persist
+
+模块划分
+- runtime
+- codegenls
 
 
 ```java
@@ -16,7 +20,7 @@ interface BeanUtil {
     /**
     * 深层拷贝当前对象.
     */
-    public static <T> T clone(T from);
+    public static <T> T clone(T bean);
 
     /**
     * 将当前form对象合并到to对象中。
@@ -32,12 +36,12 @@ interface BeanUtil {
     /**
     *  校验当前对象是否符合要求。
     */
-    public  static  <T> Option<ValidationResult> validate(Object bean);
+    public  static Option<ValidationResult> validate(Object bean);
 
     /**
-    * 判断object1是否和object2对象有差异。
+    * 判断bean1是否和bean2对象有差异。
     */
-    public  static  <T> Option<DiffResult> diff(Object object1, Object object1);
+    public  static  <T> Option<DiffResult> diff(T bean1, T bean2);
 }
 ```
 
